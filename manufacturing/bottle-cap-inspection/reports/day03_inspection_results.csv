@@ -1,0 +1,5 @@
+﻿file,expected,predicted,correct,largest_area_ratio,valid_count,center_x_norm,center_y_norm,decision,reason
+cap_on_002.jpg,cap_on,cap_on,True,0.5599226237580234,1,0.4865991955292156,0.49990236620192463,OK,
+cap_on_003.jpg,cap_on,cap_on,True,0.4566431924882629,2,0.48148468597358407,0.44985482102160756,OK,
+cap_off_002.jpg,cap_off,cap_off,True,0.29029781387642944,6,0.4529701984416369,0.5347417142101677,NG,NG_CAP_AREA
+cap_off_003.jpg,cap_off,cap_off,True,0.31687282566679553,7,0.4291398466942242,0.5606455874394706,NG,NG_CAP_AREA
