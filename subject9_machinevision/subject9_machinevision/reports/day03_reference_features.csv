@@ -1,0 +1,3 @@
+﻿label,file,otsu_value,valid_count,largest_area,largest_area_ratio,center_x_norm,center_y_norm,touches_border
+cap_on,cap_on.jpg,111.0,3,27878.0,0.6610233793332385,0.4908276852608745,0.4607695434870986,False
+cap_off,cap_off.jpg,116.0,1,19347.0,0.45874235310855027,0.5359471485795252,0.5507468249107779,True

@@ -1,0 +1,5 @@
+condition,filename,good_matches,inliers,inlier_ratio,status,time_ms
+normal,target_normal.jpg,617,610,0.988655,FOUND,140.591
+shift,target_shift.jpg,597,594,0.994975,FOUND,75.112
+rot15,target_rot15.jpg,459,447,0.973856,FOUND,83.860
+scale90,target_scale90.jpg,412,402,0.975728,FOUND,82.868

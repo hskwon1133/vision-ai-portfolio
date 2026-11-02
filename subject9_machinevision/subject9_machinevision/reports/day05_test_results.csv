@@ -1,0 +1,7 @@
+﻿file,actual,predicted,error_type,ng_reason,template_score,sift_good_matches,homography_found,homography_inliers,inlier_ratio,result_image
+test_ok_01.jpg,OK,NG,FP,LOW_INLIER_RATIO,0.581604,169,1,132,0.781065,outputs/day05/test/test_ok_01_result.jpg
+test_ok_02.jpg,OK,NG,FP,LOW_INLIER_RATIO,0.45615,156,1,131,0.839744,outputs/day05/test/test_ok_02_result.jpg
+test_ok_03.jpg,OK,NG,FP,LOW_INLIER_RATIO,0.500078,204,1,174,0.852941,outputs/day05/test/test_ok_03_result.jpg
+test_ng_01.jpg,NG,NG,TP,LOW_SIFT_MATCH;LOW_INLIER_RATIO,0.392391,58,1,43,0.741379,outputs/day05/test/test_ng_01_result.jpg
+test_ng_02.jpg,NG,NG,TP,LOW_SIFT_MATCH;LOW_INLIER_RATIO,0.515177,111,1,85,0.765766,outputs/day05/test/test_ng_02_result.jpg
+test_ng_03.jpg,NG,NG,TP,LOW_SIFT_MATCH,0.536272,105,1,96,0.914286,outputs/day05/test/test_ng_03_result.jpg

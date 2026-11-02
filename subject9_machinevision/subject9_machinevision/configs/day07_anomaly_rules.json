@@ -1,0 +1,13 @@
+{
+  "baseline_version": "day07-anomaly-v1.0",
+  "dataset": "MVTec AD bottle",
+  "backbone": "resnet18_imagenet_pretrained",
+  "feature_layer": "layer3",
+  "reference": "mean_normal_feature",
+  "reference_path": "artifacts/day07/normal_reference.npz",
+  "image_size": 224,
+  "selected_percentile": 95,
+  "threshold_method": "normal_validation_95_percentile",
+  "anomaly_threshold": 0.067458,
+  "decision_rule": "score > threshold => Anomaly"
+}

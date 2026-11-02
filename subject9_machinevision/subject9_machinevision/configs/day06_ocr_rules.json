@@ -1,0 +1,54 @@
+{
+  "baseline_version": "day06-ocr-draft",
+  "reference_file": "0637145699424_side.png",
+  "roi_by_file": {
+    "0637145699424_side.png": [
+      437,
+      301,
+      522,
+      316
+    ],
+    "0639873538899_side.png": [
+      694,
+      284,
+      771,
+      296
+    ],
+    "0679256889404_side.png": [
+      557,
+      261,
+      636,
+      279
+    ],
+    "0702739449714_side.png": [
+      320,
+      275,
+      401,
+      291
+    ],
+    "0716954573504_side.png": [
+      531,
+      271,
+      613,
+      289
+    ],
+    "0793387694868_side.png": [
+      471,
+      282,
+      554,
+      296
+    ]
+  },
+  "preprocess_mode": "original",
+  "clahe_clip_limit": 2.0,
+  "clahe_grid": [
+    8,
+    8
+  ],
+  "ocr_lang": "eng",
+  "ocr_oem": 3,
+  "ocr_psm": 7,
+  "whitelist": "0123456789",
+  "expected_pattern": "^[0-9]{13}$",
+  "allow_context_correction": false
+}

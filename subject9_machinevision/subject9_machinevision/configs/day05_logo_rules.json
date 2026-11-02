@@ -1,0 +1,19 @@
+{
+  "baseline_version": "day05-logo-v1.0",
+  "inspection_target": "광천김 로고 존재 및 정합 검사",
+  "positive_class": "NG",
+  "reference": {
+    "reference_label": "samples/day04/reference/reference_label.jpg"
+  },
+  "required_rules": {
+    "homography_found": true,
+    "sift_good_matches_min": 129,
+    "inlier_ratio_min": 0.8664
+  },
+  "calibration_result": {
+    "accuracy": 0.9167,
+    "fp": 1,
+    "fn": 0
+  },
+  "note": "Calibration 결과로 결정한 Day05 Baseline Rule"
+}

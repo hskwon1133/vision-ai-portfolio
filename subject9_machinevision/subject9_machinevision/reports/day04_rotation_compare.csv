@@ -1,0 +1,5 @@
+condition,template_score,orb_good_matches,sift_good_matches,homography_inliers,inlier_ratio,homography_status
+normal,0.999652,276,615,610,0.988655,FOUND
+shift,0.453370,245,596,594,0.994975,FOUND
+rot15,0.474990,232,458,447,0.973856,FOUND
+scale90,0.623956,156,413,402,0.975728,FOUND
