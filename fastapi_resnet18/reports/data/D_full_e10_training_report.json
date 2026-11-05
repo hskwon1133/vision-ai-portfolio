@@ -1,0 +1,63 @@
+{
+  "base_model": "microsoft/resnet-18",
+  "classes": [
+    "angular_leaf_spot",
+    "bean_rust",
+    "healthy"
+  ],
+  "train_count": 1034,
+  "val_count": 133,
+  "best_val_accuracy": 1.0,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.4134,
+      "val_accuracy": 0.9398
+    },
+    {
+      "epoch": 2,
+      "loss": 0.2133,
+      "val_accuracy": 0.9774
+    },
+    {
+      "epoch": 3,
+      "loss": 0.1113,
+      "val_accuracy": 0.9699
+    },
+    {
+      "epoch": 4,
+      "loss": 0.0982,
+      "val_accuracy": 0.985
+    },
+    {
+      "epoch": 5,
+      "loss": 0.0932,
+      "val_accuracy": 0.9699
+    },
+    {
+      "epoch": 6,
+      "loss": 0.0691,
+      "val_accuracy": 1.0
+    },
+    {
+      "epoch": 7,
+      "loss": 0.069,
+      "val_accuracy": 0.9699
+    },
+    {
+      "epoch": 8,
+      "loss": 0.0783,
+      "val_accuracy": 0.9925
+    },
+    {
+      "epoch": 9,
+      "loss": 0.0785,
+      "val_accuracy": 0.9624
+    },
+    {
+      "epoch": 10,
+      "loss": 0.0521,
+      "val_accuracy": 0.9699
+    }
+  ]
+}

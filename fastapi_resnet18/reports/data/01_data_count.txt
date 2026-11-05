@@ -1,0 +1,9 @@
+dataset/test/angular_leaf_spot 43
+dataset/test/bean_rust 43
+dataset/test/healthy 42
+dataset/train/angular_leaf_spot 345
+dataset/train/bean_rust 348
+dataset/train/healthy 341
+dataset/val/angular_leaf_spot 44
+dataset/val/bean_rust 45
+dataset/val/healthy 44

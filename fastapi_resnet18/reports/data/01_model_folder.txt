@@ -1,0 +1,5 @@
+total 43M
+-rw-r--r-- 1 user1sim user1sim  808 Nov  4 12:34 config.json
+-rw------- 1 user1sim user1sim  43M Nov  4 12:34 model.safetensors
+-rw-r--r-- 1 user1sim user1sim  352 Nov  4 12:34 preprocessor_config.json
+-rw-r--r-- 1 user1sim user1sim 1.1K Nov  4 12:34 training_report.json

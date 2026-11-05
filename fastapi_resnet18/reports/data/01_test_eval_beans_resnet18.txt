@@ -1,0 +1,11 @@
+모델: artifacts/beans_resnet18
+Test Accuracy: 115/128 = 0.8984
+
+정답 \ 예측               angular_leaf     bean_rust       healthy
+angular_leaf_spot               37             4             2
+bean_rust                        5            38             0
+healthy                          1             1            40
+
+angular_leaf_spot    precision=0.860 recall=0.860
+bean_rust            precision=0.884 recall=0.884
+healthy              precision=0.952 recall=0.952
