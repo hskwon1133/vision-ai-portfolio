@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+<h2>AI 동작 분석</h2>
+
+<form id="analysis-form">
+  {% csrf_token %}
+
+  <fieldset>
+    <legend>입력 방식</legend>
+    <label><input type="radio" name="input_type" value="UPLOAD" checked> 영상 업로드</label>
+    <label><input type="radio" name="input_type" value="WEBCAM"> IP Webcam (8초 수집)</label>
+  </fieldset>
+
+  <p>
+    <label>제목 <input type="text" name="title" placeholder="예: 손 흔들기 테스트"></label>
+  </p>
+
+  <p id="video-field">
+    <label>영상 파일 <input type="file" name="video" accept=".mp4,.mov,.avi"></label>
+  </p>
+
+  <p id="webcam-guide" hidden>
+    분석 시작을 누르면 <b>8초 동안</b> 카메라 영상을 수집합니다. 카메라 앞에서 동작을 해 주세요.
+  </p>
+
+  <button type="submit" id="start-btn">AI 분석 시작</button>
+</form>
+
+<section>
+  <h3>작업 상태</h3>
+  <p id="status-box" class="status">분석을 시작하면 여기에 상태가 표시됩니다.</p>
+</section>
+
+<section>
+  <h3>사람별 결과</h3>
+  <table id="result-table">
+    <thead>
+      <tr><th>Track ID</th><th>동작</th><th>확신도</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <p class="note">※ 확신도가 0.5 미만이면 UNKNOWN(판단 불확실)으로 표시됩니다. 예측 결과는 참고용입니다.</p>
+</section>
+
+<section>
+  <h3>최근 분석 이력</h3>
+  <table id="history-table">
+    <thead>
+      <tr><th>ID</th><th>제목</th><th>입력</th><th>상태</th><th>요청 시각</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<script src="{% static 'js/analyses.js' %}"></script>
+{% endblock %}
