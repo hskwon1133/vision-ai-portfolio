@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+<h2>관리자 대시보드</h2>
+
+<div class="charts">
+  <div>
+    <h3>동작별 예측 건수</h3>
+    <canvas id="action-chart"></canvas>
+  </div>
+  <div>
+    <h3>작업 상태별 건수</h3>
+    <canvas id="status-chart"></canvas>
+  </div>
+</div>
+
+<h3>최근 작업</h3>
+<table>
+  <thead>
+    <tr><th>ID</th><th>사용자</th><th>입력</th><th>상태</th><th>요청 시각</th></tr>
+  </thead>
+  <tbody>
+    {% for job in recent_jobs %}
+    <tr>
+      <td>{{ job.id }}</td>
+      <td>{{ job.user.username }}</td>
+      <td>{{ job.get_input_type_display }}</td>
+      <td>{{ job.get_status_display }}</td>
+      <td>{{ job.created_at|date:"Y-m-d H:i" }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">아직 작업이 없습니다.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{{ chart_data|json_script:"chart-data" }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}
