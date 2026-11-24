@@ -5,16 +5,16 @@
 
 ## 1. API 목록
 
-| API ID | Method | URL | 요청 형태 | 성공 HTTP | 주요 응답 | 실패 HTTP |
-|---|---|---|---|---:|---|---|
-| API-01 | GET | `/health` | 없음 | 200 | `status` | 서버 미실행 시 HTTP 응답 없음 (`curl: (7) Failed to connect`) |
-| API-02 | POST | `/api/sync/classify/` | `multipart/form-data` / `image` | 200 | `model_id`, `top1`, `all`, `inference_ms`, `cache_hit` | 400, 413 |
-| API-03 | POST | `/api/async/classify/` | `multipart/form-data` / `image` | 202 | `job_id`, `status`, `check_url` | 400, 413, 503 |
-| API-04 | GET | `/api/async/jobs/{job_id}/` | 정수형 `job_id` | 200 | `job_id`, `status`, `model_id`, `top1`, `all`, `inference_ms`, `cache_hit`, `error_message` | 404 |
-| WEB-01 | GET | `/` | 없음 | 307 | `/vision/sync/`로 이동 | — |
-| WEB-02 | GET | `/vision/sync/` | 없음 | 200 | 동기 분류 HTML | — |
-| WEB-03 | GET | `/vision/async/` | 없음 | 200 | 비동기 분류 HTML (1초 간격 상태 조회) | — |
-| DOC-01 | GET | `/docs` | 없음 | 200 | Swagger UI | — |
+| API ID | Method | URL                         | 요청 형태                           | 성공 HTTP | 주요 응답                                                                                       | 실패 HTTP                                             |
+| ------ | ------ | --------------------------- | ------------------------------- | ------: | ------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| API-01 | GET    | `/health`                   | 없음                              |     200 | `status`                                                                                    | 서버 미실행 시 HTTP 응답 없음 (`curl: (7) Failed to connect`) |
+| API-02 | POST   | `/api/sync/classify/`       | `multipart/form-data` / `image` |     200 | `model_id`, `top1`, `all`, `inference_ms`, `cache_hit`                                      | 400, 413                                            |
+| API-03 | POST   | `/api/async/classify/`      | `multipart/form-data` / `image` |     202 | `job_id`, `status`, `check_url`                                                             | 400, 413, 503                                       |
+| API-04 | GET    | `/api/async/jobs/{job_id}/` | 정수형 `job_id`                    |     200 | `job_id`, `status`, `model_id`, `top1`, `all`, `inference_ms`, `cache_hit`, `error_message` | 404                                                 |
+| WEB-01 | GET    | `/`                         | 없음                              |     307 | `/vision/sync/`로 이동                                                                         | —                                                   |
+| WEB-02 | GET    | `/vision/sync/`             | 없음                              |     200 | 동기 분류 HTML                                                                                  | —                                                   |
+| WEB-03 | GET    | `/vision/async/`            | 없음                              |     200 | 비동기 분류 HTML (1초 간격 상태 조회)                                                                   | —                                                   |
+| DOC-01 | GET    | `/docs`                     | 없음                              |     200 | Swagger UI                                                                                  | —                                                   |
 
 **의미 구분:** `202`는 **작업 접수**이며 분석 완료가 아니다. 완료 여부는 API-04 응답의 `status`가 `done`(또는 `failed`)인지로 판단한다.
 
