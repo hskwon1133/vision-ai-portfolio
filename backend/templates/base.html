@@ -1,25 +1,51 @@
+{% load static %}
 <!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Vision Action{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
 <body>
-  <nav>
-    <a href="{% url 'home' %}">홈</a>
-    {% if user.is_authenticated %}
-      | {{ user.username }}님
-      {% if user.is_staff %} | <a href="{% url 'dashboard' %}">대시보드</a> | <a href="/admin/">관리자</a>{% endif %}
-      <form action="{% url 'logout' %}" method="post" style="display:inline">
-        {% csrf_token %}
-        <button type="submit">로그아웃</button>
-      </form>
-    {% else %}
-      | <a href="{% url 'login' %}">로그인</a>
-      | <a href="{% url 'signup' %}">회원가입</a>
-    {% endif %}
-  </nav>
-  <hr>
-  {% block content %}{% endblock %}
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="{% url 'home' %}">
+        <span class="brand-mark" aria-hidden="true"></span>Vision Action
+      </a>
+
+      {% if user.is_authenticated %}
+      <nav class="nav">
+        {% with name=request.resolver_match.url_name %}
+        <a href="{% url 'analysis_index' %}" class="{% if name == 'analysis_index' %}active{% endif %}">분석</a>
+        {% if user.is_staff %}
+        <a href="{% url 'dashboard' %}" class="{% if name == 'dashboard' %}active{% endif %}">대시보드</a>
+        <a href="/admin/">관리자</a>
+        {% endif %}
+        {% endwith %}
+      </nav>
+      {% endif %}
+
+      <div class="user">
+        {% if user.is_authenticated %}
+          <span class="user-chip">{{ user.username }}{% if user.is_staff %} · 관리자{% endif %}</span>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-ghost">로그아웃</button>
+          </form>
+        {% else %}
+          <a class="btn btn-ghost" href="{% url 'login' %}">로그인</a>
+          <a class="btn btn-primary" href="{% url 'signup' %}">회원가입</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block scripts %}{% endblock %}
 </body>
 </html>
