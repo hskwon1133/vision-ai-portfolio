@@ -1,42 +1,62 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title %}관리자 대시보드 · Vision Action{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/app.css' %}">
-<h2>관리자 대시보드</h2>
-
-<div class="charts">
-  <div>
-    <h3>동작별 예측 건수</h3>
-    <canvas id="action-chart"></canvas>
-  </div>
-  <div>
-    <h3>작업 상태별 건수</h3>
-    <canvas id="status-chart"></canvas>
-  </div>
+<div class="page-head">
+  <h1>관리자 대시보드</h1>
+  <p class="sub">PostgreSQL에 저장된 실제 분석 기록을 집계했습니다.</p>
 </div>
 
-<h3>최근 작업</h3>
-<table>
-  <thead>
-    <tr><th>ID</th><th>사용자</th><th>입력</th><th>상태</th><th>요청 시각</th></tr>
-  </thead>
-  <tbody>
-    {% for job in recent_jobs %}
-    <tr>
-      <td>{{ job.id }}</td>
-      <td>{{ job.user.username }}</td>
-      <td>{{ job.get_input_type_display }}</td>
-      <td>{{ job.get_status_display }}</td>
-      <td>{{ job.created_at|date:"Y-m-d H:i" }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="5">아직 작업이 없습니다.</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="kpis" id="kpis">
+  <div class="kpi"><span class="kpi-label">전체 작업</span><span class="kpi-value" id="kpi-total">0</span></div>
+  <div class="kpi"><span class="kpi-label">완료</span><span class="kpi-value" id="kpi-done">0</span></div>
+  <div class="kpi"><span class="kpi-label">실패</span><span class="kpi-value" id="kpi-failed">0</span></div>
+  <div class="kpi"><span class="kpi-label">사람별 예측</span><span class="kpi-value" id="kpi-preds">0</span></div>
+</div>
+
+<div class="grid-2">
+  <section class="card">
+    <h2 class="card-title">동작별 예측 건수</h2>
+    <div class="chart-box"><canvas id="action-chart" aria-label="동작별 예측 건수 막대그래프"></canvas></div>
+  </section>
+  <section class="card">
+    <h2 class="card-title">작업 상태별 건수</h2>
+    <div class="chart-box"><canvas id="status-chart" aria-label="작업 상태별 건수 원형그래프"></canvas></div>
+  </section>
+</div>
+
+<section class="card">
+  <div class="card-head">
+    <h2 class="card-title">최근 작업</h2>
+    <span class="muted">최근 10건</span>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>ID</th><th>사용자</th><th>입력</th><th>상태</th><th>요청 시각</th></tr>
+      </thead>
+      <tbody>
+        {% for job in recent_jobs %}
+        <tr>
+          <td class="num">#{{ job.id }}</td>
+          <td>{{ job.user.username }}</td>
+          <td>{{ job.get_input_type_display }}</td>
+          <td><span class="badge badge-{{ job.status }}">{{ job.get_status_display }}</span></td>
+          <td class="muted">{{ job.created_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="empty">아직 작업이 없습니다.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 
 {{ chart_data|json_script:"chart-data" }}
+{% endblock %}
+
+{% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}

@@ -1,60 +1,93 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title %}AI 동작 분석 · Vision Action{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/app.css' %}">
+<div class="page-head">
+  <h1>AI 동작 분석</h1>
+  <p class="sub">영상을 올리거나 IP Webcam으로 8초 동안 동작을 수집하면, 6가지 재활 동작 중 하나로 예측합니다.</p>
+</div>
 
-<h2>AI 동작 분석</h2>
+<div class="grid-2">
+  <!-- 왼쪽: 분석 요청 -->
+  <section class="card">
+    <h2 class="card-title">새 분석</h2>
 
-<form id="analysis-form">
-  {% csrf_token %}
+    <form id="analysis-form">
+      {% csrf_token %}
 
-  <fieldset>
-    <legend>입력 방식</legend>
-    <label><input type="radio" name="input_type" value="UPLOAD" checked> 영상 업로드</label>
-    <label><input type="radio" name="input_type" value="WEBCAM"> IP Webcam (8초 수집)</label>
-  </fieldset>
+      <div class="segmented" role="radiogroup" aria-label="입력 방식">
+        <label>
+          <input type="radio" name="input_type" value="UPLOAD" checked>
+          <span>영상 업로드</span>
+        </label>
+        <label>
+          <input type="radio" name="input_type" value="WEBCAM">
+          <span>IP Webcam</span>
+        </label>
+      </div>
 
-  <p>
-    <label>제목 <input type="text" name="title" placeholder="예: 손 흔들기 테스트"></label>
-  </p>
+      <label class="field">
+        <span class="field-label">제목 <em>(선택)</em></span>
+        <input type="text" name="title" placeholder="예: 손 흔들기 테스트">
+      </label>
 
-  <p id="video-field">
-    <label>영상 파일 <input type="file" name="video" accept=".mp4,.mov,.avi"></label>
-  </p>
+      <div id="video-field" class="field">
+        <span class="field-label">영상 파일</span>
+        <label class="dropzone" id="dropzone">
+          <input type="file" name="video" accept=".mp4,.mov,.avi">
+          <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+                  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="dz-text" id="dz-text">파일을 선택하거나 여기로 끌어다 놓으세요</span>
+          <span class="dz-hint">MP4 · MOV · AVI</span>
+        </label>
+      </div>
 
-  <p id="webcam-guide" hidden>
-    분석 시작을 누르면 <b>8초 동안</b> 카메라 영상을 수집합니다. 카메라 앞에서 동작을 해 주세요.
-  </p>
+      <div id="webcam-guide" class="notice" hidden>
+        <strong>8초 동안 수집해요.</strong>
+        분석 시작을 누르면 바로 카메라 영상 수집이 시작됩니다. 전신이 보이게 서서 동작을 해 주세요.
+      </div>
 
-  <button type="submit" id="start-btn">AI 분석 시작</button>
-</form>
+      <button type="submit" id="start-btn" class="btn btn-primary btn-block">AI 분석 시작</button>
+    </form>
+  </section>
 
-<section>
-  <h3>작업 상태</h3>
-  <p id="status-box" class="status">분석을 시작하면 여기에 상태가 표시됩니다.</p>
+  <!-- 오른쪽: 상태와 결과 -->
+  <section class="card">
+    <h2 class="card-title">작업 상태</h2>
+    <ol class="steps" id="steps">
+      <li data-step="PENDING"><span class="dot"></span>대기</li>
+      <li data-step="PROCESSING"><span class="dot"></span>처리 중</li>
+      <li data-step="DONE"><span class="dot"></span><span id="done-label">완료</span></li>
+    </ol>
+    <p id="status-box" class="status">분석을 시작하면 여기에 상태가 표시됩니다.</p>
+
+    <h2 class="card-title mt">사람별 결과</h2>
+    <div id="result-list" class="result-list">
+      <p class="empty">아직 결과가 없습니다.</p>
+    </div>
+    <p class="note">확신도가 0.5 미만이면 <b>판단 불확실</b>로 표시됩니다. 예측 결과는 참고용이며 정답이나 위험 판정이 아닙니다.</p>
+  </section>
+</div>
+
+<section class="card">
+  <div class="card-head">
+    <h2 class="card-title">최근 분석 이력</h2>
+    <span class="muted">행을 누르면 그 작업의 결과를 볼 수 있어요</span>
+  </div>
+  <div class="table-wrap">
+    <table id="history-table" class="table">
+      <thead>
+        <tr><th>ID</th><th>제목</th><th>입력</th><th>상태</th><th>요청 시각</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </section>
+{% endblock %}
 
-<section>
-  <h3>사람별 결과</h3>
-  <table id="result-table">
-    <thead>
-      <tr><th>Track ID</th><th>동작</th><th>확신도</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <p class="note">※ 확신도가 0.5 미만이면 UNKNOWN(판단 불확실)으로 표시됩니다. 예측 결과는 참고용입니다.</p>
-</section>
-
-<section>
-  <h3>최근 분석 이력</h3>
-  <table id="history-table">
-    <thead>
-      <tr><th>ID</th><th>제목</th><th>입력</th><th>상태</th><th>요청 시각</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</section>
-
+{% block scripts %}
 <script src="{% static 'js/analyses.js' %}"></script>
 {% endblock %}
